@@ -29,6 +29,19 @@
  * Start Helper Functions
  * 
 */
+function createNav(sections) {
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < sections.length; i++) {
+        const li = document.createElement('li');
+        li.classList.add('menu__link');
+        li.textContent = sections[i].dataset.nav;
+        li.setAttribute('id', i + 1);
+
+        fragment.appendChild(li);
+    }
+
+    return fragment;
+}
 
 
 
@@ -39,7 +52,10 @@
 */
 
 // build the nav
+const sections = document.querySelectorAll('section');
+const navbar = document.getElementById('navbar__list');
 
+navbar.appendChild(createNav(sections));
 
 // Add class 'active' to section when near top of viewport
 
@@ -50,7 +66,7 @@
 /**
  * End Main Functions
  * Begin Events
- * 
+ *
 */
 
 // Build menu 
