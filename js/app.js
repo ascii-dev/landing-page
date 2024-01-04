@@ -22,7 +22,8 @@
  * Define Global Variables
  * 
 */
-
+const sections = document.querySelectorAll('section');
+const navbar = document.getElementById('navbar__list');
 
 /**
  * End Global Variables
@@ -43,7 +44,28 @@ function createNav(sections) {
     return fragment;
 }
 
+function setNavActive(dataNav, set) {
+    const navId = dataNav.split(' ').pop();
+    const nav = document.getElementById(navId);
 
+    if (set) {
+        nav.classList.add('menu__active');
+    } else {
+        nav.classList.remove('menu__active');
+    }
+}
+
+function addActive(section) {
+    const top = section.getBoundingClientRect().top;
+
+    if (top >= 0 && top < 150) {
+        section.classList.add('active');
+        setNavActive(section.dataset.nav, true);
+    } else {
+        section.classList.remove('active');
+        setNavActive(section.dataset.nav, false);
+    }
+}
 
 /**
  * End Helper Functions
@@ -52,16 +74,16 @@ function createNav(sections) {
 */
 
 // build the nav
-const sections = document.querySelectorAll('section');
-const navbar = document.getElementById('navbar__list');
-
 navbar.appendChild(createNav(sections));
 
 // Add class 'active' to section when near top of viewport
+document.addEventListener('scroll', function (event) {
+    event.preventDefault();
 
+    sections.forEach(addActive);
+});
 
 // Scroll to anchor ID using scrollTO event
-
 
 /**
  * End Main Functions
