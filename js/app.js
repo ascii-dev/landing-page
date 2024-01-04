@@ -30,16 +30,12 @@ const navbar = document.getElementById('navbar__list');
  * Start Helper Functions
  * 
 */
-function scrollToSection(event) {
-    const navId = event.target.id;
 
-    const top = document.querySelector(`#section` + navId).getBoundingClientRect().top;
-    window.scrollBy({
-        top,
-        behavior: "smooth",
-    });
-}
-
+/**
+* @description creates navigation unordered list items
+* @param {NodeList} sections - the sections to create navigation items for
+* @returns {DocumentFragment} fragment - a document fragment containing the list of nav items
+*/
 function createNav(sections) {
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < sections.length; i++) {
@@ -56,7 +52,12 @@ function createNav(sections) {
     return fragment;
 }
 
-function setNavActive(dataNav, set) {
+/**
+* @description toggles the active class of a nav item when it's section is both in and out of focus
+* @param {string} dataNav - the id of the section that's currently in view
+* @param {boolean} set - whether the active class should  be set or not
+*/
+function setNavActiveClass(dataNav, set) {
     const navId = dataNav.split(' ').pop();
     const nav = document.getElementById(navId);
 
@@ -67,18 +68,6 @@ function setNavActive(dataNav, set) {
     }
 }
 
-function addActive(section) {
-    const top = section.getBoundingClientRect().top;
-
-    if (top >= -5 && top < 150) {
-        section.classList.add('active');
-        setNavActive(section.dataset.nav, true);
-    } else {
-        section.classList.remove('active');
-        setNavActive(section.dataset.nav, false);
-    }
-}
-
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -86,16 +75,51 @@ function addActive(section) {
 */
 
 // build the nav
-navbar.appendChild(createNav(sections));
+/**
+* @description appends build nav items to the dom
+* @param {Event} event - DOMContentLoaded event
+*/
+function buildNav() {
+    navbar.appendChild(createNav(sections));
+}
 
 // Add class 'active' to section when near top of viewport
-document.addEventListener('scroll', function (event) {
+/**
+* @description sets a section's class to active if it's in view and also sets it's corresponding nav item to active
+* @param {Event} event - scroll event
+*/
+function addActive(event) {
     event.preventDefault();
 
-    sections.forEach(addActive);
-});
+    sections.forEach(function (section) {
+        const top = section.getBoundingClientRect().top;
+
+        if (top >= -5 && top < 150) {
+            section.classList.add('active');
+            setNavActiveClass(section.dataset.nav, true);
+        } else {
+            section.classList.remove('active');
+            setNavActiveClass(section.dataset.nav, false);
+        }
+    });
+}
 
 // Scroll to anchor ID using scrollTO event
+/**
+* @description scrolls a section into view when it's corresponding nav item is clicked
+* @param {Event} event - click event
+*/
+function scrollToSection(event) {
+    event.preventDefault();
+
+    const navId = event.target.id;
+
+    const top = document.querySelector(`#section` + navId).getBoundingClientRect().top;
+    window.scrollBy({
+        top,
+        behavior: "smooth",
+    });
+}
 
 /**
  * End Main Functions
@@ -104,9 +128,9 @@ document.addEventListener('scroll', function (event) {
 */
 
 // Build menu 
+document.addEventListener('DOMContentLoaded', buildNav);
 
 // Scroll to section on link click
 
 // Set sections as active
-
-
+document.addEventListener('scroll', addActive);

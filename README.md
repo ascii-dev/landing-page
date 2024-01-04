@@ -1,9 +1,19 @@
-# Landing Page Project
+# Landing Page 
 
-## Instructions
+## Project Description
+Landing project is a simple landing page website that automatically builds the menu items using the content available in the website. It also includes some functionalities using JavaScript to make the website more interactive.
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+## Usage Instructions
+1. Download the repo to a folder on your computer
+2. Navigate to the folder
+3. Open the `index.html` in your favorite browser
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Contributing
+1. Fork it (https://github.com/ascii-dev/landing-page/fork)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+## Meta
+Samuel Raphael – [@doungyenzel](https://twitter.com/doungyenzel) – samueloraphael@gmail.com
