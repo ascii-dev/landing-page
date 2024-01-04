@@ -30,6 +30,16 @@ const navbar = document.getElementById('navbar__list');
  * Start Helper Functions
  * 
 */
+function scrollToSection(event) {
+    const navId = event.target.id;
+
+    const top = document.querySelector(`#section` + navId).getBoundingClientRect().top;
+    window.scrollBy({
+        top,
+        behavior: "smooth",
+    });
+}
+
 function createNav(sections) {
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < sections.length; i++) {
@@ -37,6 +47,8 @@ function createNav(sections) {
         li.classList.add('menu__link');
         li.textContent = sections[i].dataset.nav;
         li.setAttribute('id', i + 1);
+
+        li.addEventListener('click', scrollToSection);
 
         fragment.appendChild(li);
     }
@@ -58,7 +70,7 @@ function setNavActive(dataNav, set) {
 function addActive(section) {
     const top = section.getBoundingClientRect().top;
 
-    if (top >= 0 && top < 150) {
+    if (top >= -5 && top < 150) {
         section.classList.add('active');
         setNavActive(section.dataset.nav, true);
     } else {
